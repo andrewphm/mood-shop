@@ -41,3 +41,14 @@ data.forEach((mood) => {
 
   itemsContainer.appendChild(newDiv);
 });
+
+const cart = [];
+
+const addItem = (name, price) => {
+  const item = { name, price, qty: 1 };
+  cart.push(item);
+};
+
+const showItems = () => {
+  console.log(`You have ${cart.lengths} items in your cart.`);
+};

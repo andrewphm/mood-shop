@@ -2,41 +2,14 @@ import data from './data.js';
 
 const itemsContainer = document.querySelector('#items');
 
-// for (let i = 0; i < data.length; i++) {
-//   const newDiv = document.createElement('div');
-//   newDiv.className = 'item';
-//   const img = document.createElement('img');
-//   img.src = data[i].image;
-//   img.width = 300;
-//   img.height = 300;
-//   newDiv.appendChild(img);
-
-//   // Price and desc
-//   const descriptionEl = document.createElement('p');
-//   const priceEl = document.createElement('p');
-//   descriptionEl.innerText = data[i].desc;
-//   priceEl.innerText = data[i].price;
-//   newDiv.appendChild(descriptionEl);
-//   newDiv.appendChild(priceEl);
-
-//   // Make a button
-//   const button = document.createElement('button');
-//   button.id = data[i].name;
-//   button.dataset.price = data[i].price;
-//   button.innerHTML = 'Add to Cart';
-//   newDiv.appendChild(button);
-
-//   itemsContainer.appendChild(newDiv);
-// }
-
-data.forEach((mood) => {
+data.forEach(({ desc, price, name, image }) => {
   const newDiv = document.createElement('div');
   newDiv.className = 'item';
-  newDiv.innerHTML = `<div class="img-wrapper"><img width=300 height=300 src="${mood.image}"></div>
+  newDiv.innerHTML = `<div class="img-wrapper"><img width=300 height=300 src="${image}"></div>
                       <div class="info"> 
-                      <p>${mood.desc}</p>
-                      <p>$${mood.price}</p>
-                      <button data-price="${mood.price}" id="${mood.name}">Add to Cart</button>
+                      <p>${desc}</p>
+                      <p>$${price}</p>
+                      <button data-price="${price}" id="${name}">Add to Cart</button>
                       </div>`;
 
   itemsContainer.appendChild(newDiv);
@@ -66,14 +39,30 @@ const getQty = () => {
 const showItems = () => {
   const qty = getQty();
 
-  cartQty.innerHTML = `You have ${qty} items in your cart.`;
+  if (qty === 0) {
+    cartQty.innerHTML = `Your cart is empty, let's shop!`;
+  } else {
+    cartQty.innerHTML = `You have ${qty} items in your cart.`;
+  }
 
   let itemStr = '';
 
+  for (const { name, price, qty } of cart) {
+    itemStr += `<li><strong>${name}</strong> $${price} x ${qty} = $${(price * qty).toFixed(
+      2
+    )}</li>`;
+  }
+
   itemList.innerHTML = itemStr;
+  if (cart.length > 0)
+    cartTotal.innerHTML = `<p>Total cost of your items are: $${calculateTotal()}</p>`;
 };
 
-const calculateTotal = () => {};
+const calculateTotal = () => {
+  let total = cart.reduce((acc, curr) => acc + curr.price * curr.qty, 0);
+
+  return total.toFixed(2);
+};
 
 const removeItem = (e) => {};
 
@@ -83,3 +72,5 @@ cartButtons.forEach((button) =>
     showItems();
   })
 );
+
+showItems();

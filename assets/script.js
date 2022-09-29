@@ -31,10 +31,13 @@ const itemsContainer = document.querySelector('#items');
 
 data.forEach((mood) => {
   const newDiv = document.createElement('div');
-  newDiv.innerHTML = `<img width=300 height=300 src="${mood.image}">
+  newDiv.className = 'item';
+  newDiv.innerHTML = `<div class="img-wrapper"><img width=300 height=300 src="${mood.image}"></div>
+                      <div class="info"> 
                       <p>${mood.desc}</p>
-                      <p>${mood.price}</p>
-                      <button data-price="${mood.price}" id="${mood.name}">Add to Cart</button>`;
+                      <p>$${mood.price}</p>
+                      <button data-price="${mood.price}" id="${mood.name}">Add to Cart</button>
+                      </div>`;
 
   itemsContainer.appendChild(newDiv);
 });

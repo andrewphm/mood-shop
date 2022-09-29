@@ -10,6 +10,7 @@ body {
   flex-direction: row;
   justify-content: space-between;
   background-color: bisque;
+  padding: 0 3rem;
 }
 
 .page-header ul {

@@ -42,25 +42,44 @@ data.forEach((mood) => {
   itemsContainer.appendChild(newDiv);
 });
 
-const cart = [];
-
 const cartButtons = document.querySelectorAll('.info button');
+const itemList = document.getElementById('item-list');
+const cartQty = document.getElementById('cart-qty');
+const cartTotal = document.getElementById('cart-total');
 
-const addItem = (e) => {
-  //   const item = { name, price, qty: 1 };
-  //   cart.push(item);
-  console.log({ name: e.target.id, price: e.target.dataset.price, qty: 1 });
+const cart = [];
+const addItem = (name, price) => {
+  const item = { name, price, qty: 1 };
+  for (const cartItem of cart) {
+    if (cartItem.name == item.name) {
+      cartItem.qty++;
+      return;
+    }
+  }
+  cart.push(item);
 };
-cartButtons.forEach((button) => button.addEventListener('click', addItem));
+const getQty = () => {
+  const totalQty = cart.reduce((acc, curr) => acc + curr.qty, 0);
+  return totalQty || 0;
+};
 
 const showItems = () => {
-  for (const item of cart) {
-    console.log(`${item.name}`);
-  }
+  const qty = getQty();
 
-  console.log(`You have ${cart.lengths} items in your cart.`);
+  cartQty.innerHTML = `You have ${qty} items in your cart.`;
+
+  let itemStr = '';
+
+  itemList.innerHTML = itemStr;
 };
 
-const getQty = () => {};
-
 const calculateTotal = () => {};
+
+const removeItem = (e) => {};
+
+cartButtons.forEach((button) =>
+  button.addEventListener('click', () => {
+    addItem(button.getAttribute('id'), button.getAttribute('data-price'));
+    showItems();
+  })
+);

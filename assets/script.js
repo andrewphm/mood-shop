@@ -44,11 +44,23 @@ data.forEach((mood) => {
 
 const cart = [];
 
-const addItem = (name, price) => {
-  const item = { name, price, qty: 1 };
-  cart.push(item);
+const cartButtons = document.querySelectorAll('.info button');
+
+const addItem = (e) => {
+  //   const item = { name, price, qty: 1 };
+  //   cart.push(item);
+  console.log({ name: e.target.id, price: e.target.dataset.price, qty: 1 });
 };
+cartButtons.forEach((button) => button.addEventListener('click', addItem));
 
 const showItems = () => {
+  for (const item of cart) {
+    console.log(`${item.name}`);
+  }
+
   console.log(`You have ${cart.lengths} items in your cart.`);
 };
+
+const getQty = () => {};
+
+const calculateTotal = () => {};

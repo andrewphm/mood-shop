@@ -26,10 +26,12 @@ const addItem = (name, price) => {
   for (const cartItem of cart) {
     if (cartItem.name == item.name) {
       cartItem.qty++;
+      showItems();
       return;
     }
   }
   cart.push(item);
+  showItems();
 };
 const getQty = () => {
   const totalQty = cart.reduce((acc, curr) => acc + curr.qty, 0);
@@ -40,22 +42,29 @@ const showItems = () => {
   const qty = getQty();
 
   if (qty === 0) {
-    cartQty.innerHTML = `Your cart is empty, let's shop!`;
+    cartQty.innerHTML = `Your mood cart is currently empty, <strong>let's get shopping!</strong>`;
   } else {
-    cartQty.innerHTML = `You have ${qty} items in your cart.`;
+    cartQty.innerHTML = `You have <strong>${qty}</strong> items in your cart.`;
   }
 
   let itemStr = '';
 
   for (const { name, price, qty } of cart) {
-    itemStr += `<li><strong>${name}</strong> $${price} x ${qty} = $${(price * qty).toFixed(
-      2
-    )}</li>`;
+    itemStr += `<li>
+        <strong>${name}</strong> $${price} x ${qty} = $${(price * qty).toFixed(2)}
+        <button class="remove" data-name="${name}">Remove</button>
+        <button class="add-one" data-name="${name}"> + </button>
+        <button class="remove-one" data-name="${name}"> - </button>
+        
+        </li>`;
   }
 
   itemList.innerHTML = itemStr;
-  if (cart.length > 0)
+  if (cart.length > 0) {
     cartTotal.innerHTML = `<p>Total cost of your items are: $${calculateTotal()}</p>`;
+  } else {
+    cartTotal.innerHTML = ``;
+  }
 };
 
 const calculateTotal = () => {
@@ -64,7 +73,35 @@ const calculateTotal = () => {
   return total.toFixed(2);
 };
 
-const removeItem = (e) => {};
+const removeItem = (name, qty = 0) => {
+  if (qty === 0) {
+    const index = cart.findIndex((item) => {
+      return item.name === name;
+    });
+    cart.splice(index, 1);
+    showItems();
+  }
+
+  const index = cart.findIndex((item) => {
+    return item.name == name;
+  });
+
+  cart[index].qty -= qty;
+  if (cart[index].qty <= 0) cart.splice(index, 1);
+
+  showItems();
+};
+
+itemList.addEventListener('click', (e) => {
+  const name = e.target.dataset.name;
+  if (e.target.classList.contains('remove')) {
+    removeItem(name, 0);
+  } else if (e.target.classList.contains('add-one')) {
+    addItem(name);
+  } else if (e.target.classList.contains('remove-one')) {
+    removeItem(name, 1);
+  }
+});
 
 cartButtons.forEach((button) =>
   button.addEventListener('click', () => {

@@ -8,8 +8,10 @@ data.forEach(({ desc, price, name, image }) => {
   newDiv.innerHTML = `<div class="img-wrapper"><img width=300 height=300 src="${image}"></div>
                       <div class="info"> 
                       <p>${desc}</p>
-                      <p>$${price}</p>
+                      <div class="info-price">
+                      <p>$ ${price}</p>
                       <button data-price="${price}" id="${name}">Add to Cart</button>
+                      </div>
                       </div>`;
 
   itemsContainer.appendChild(newDiv);
@@ -55,7 +57,7 @@ const showItems = () => {
 
   for (const { name, price, qty } of cart) {
     itemStr += `<li>
-        <strong>${name}</strong> $${price} x ${qty} = $${(price * qty).toFixed(2)}
+        <p><strong>${name}</strong> $${price} x ${qty} = $${(price * qty).toFixed(2)}</p>
         <button class="remove" data-name="${name}">Remove</button>
         <button class="add-one" data-name="${name}"> + </button>
         <button class="remove-one" data-name="${name}"> - </button>
@@ -66,7 +68,7 @@ const showItems = () => {
 
   itemList.innerHTML = itemStr;
   if (cart.length > 0) {
-    cartTotal.innerHTML = `<p>Total cost of your items are: $${calculateTotal()}</p>`;
+    cartTotal.innerHTML = `<p class="total-cost">Total cost of your items are: $${calculateTotal()}</p>`;
   } else {
     cartTotal.innerHTML = ``;
   }

@@ -3,6 +3,13 @@
   scroll-behavior: smooth;
 }
 
+p {
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+  font-size: 1.1rem;
+}
+
 body {
   font-family: Helvetica;
   font-size: 16px;
@@ -11,12 +18,19 @@ body {
   scroll-behavior: smooth;
 }
 
+main {
+  padding: 3rem 0;
+  background-color: #e6eedf;
+}
+
 .page-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: bisque;
-  padding: 0 3rem;
+  background-color: #24664f;
+  padding: 0 5rem;
+  color: white;
+  font-size: 2rem;
 }
 
 .page-header ul {
@@ -30,6 +44,8 @@ body {
   display: block;
   padding: 0.5em;
   text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
 }
 
 .items {
@@ -54,11 +70,23 @@ body {
 }
 
 .info {
+  min-height: 250px;
   width: 100%;
-  padding: 0.5rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  justify-content: space-between;
+}
+
+.info-price {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+.info-price p {
+  text-align: center;
+  font-size: 1.5rem;
 }
 
 .item img {
@@ -68,14 +96,14 @@ body {
 }
 
 .info button {
-  background-color: #424a54;
+  background-color: #34515f;
   color: white;
   padding: 0.5rem 0.5rem;
   font-size: 1rem;
   border: none;
   font-weight: bold;
   border: 2px solid #424a54;
-  justify-self: flex-start;
+  justify-self: center;
 }
 
 .info button:hover {
@@ -88,8 +116,53 @@ body {
 }
 
 footer {
-  width: 90%;
+  width: 100%;
   margin: auto;
   min-height: 500px;
-  padding-top: 3rem;
+  background-color: #6c7c89;
+  padding: 3rem 4rem;
+}
+
+footer h2 {
+  font-size: 2.2rem;
+}
+
+footer ul {
+  padding: 1rem 0;
+}
+
+footer ul li {
+  list-style: none;
+  display: flex;
+  margin: 1rem 0;
+  width: 100%;
+  column-gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+footer ul li p {
+  width: 250px;
+  margin: auto 0;
+}
+
+#cart-qty {
+  font-size: 1.3rem;
+}
+
+.add-one {
+  padding: 0.5rem 0.8rem;
+}
+
+.remove-one {
+  padding: 0.5rem 0.8rem;
+}
+
+.remove {
+  padding: 0.5rem 0.5rem;
+}
+
+.update {
+  width: 2.5rem;
+  text-align: center;
+  font-size: 1rem;
 }

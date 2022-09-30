@@ -27,10 +27,14 @@ const addItem = (name, price) => {
     if (cartItem.name == item.name) {
       cartItem.qty++;
       showItems();
+      itemList.scrollIntoView();
       return;
     }
   }
   cart.push(item);
+
+  itemList.scrollIntoView();
+
   showItems();
 };
 const getQty = () => {
@@ -55,6 +59,7 @@ const showItems = () => {
         <button class="remove" data-name="${name}">Remove</button>
         <button class="add-one" data-name="${name}"> + </button>
         <button class="remove-one" data-name="${name}"> - </button>
+        <input class="update" type="number" data-name="${name}" min="0" value="${qty}">
         
         </li>`;
   }
@@ -80,6 +85,7 @@ const removeItem = (name, qty = 0) => {
     });
     cart.splice(index, 1);
     showItems();
+    return;
   }
 
   const index = cart.findIndex((item) => {
@@ -102,6 +108,18 @@ itemList.addEventListener('click', (e) => {
     removeItem(name, 1);
   }
 });
+
+itemList.onchange = (e) => {
+  const name = e.target.dataset.name;
+  if (e.target.value <= 0) {
+    removeItem(name, 0);
+    return;
+  }
+
+  const index = cart.findIndex((item) => item.name == name);
+  cart[index].qty = parseInt(e.target.value);
+  showItems();
+};
 
 cartButtons.forEach((button) =>
   button.addEventListener('click', () => {
